@@ -1,10 +1,8 @@
-#Super Solver (Reformatting Code)
-######Solves sudoku given image file
+# Super Solver (Reformatting Code)
+###### Solves sudoku given image file
 Built with OpenCV, Numpy, and Scikit-Learn on **Python 3.6**
 
 ------------
-
-
 
 <p align="center">**Here are some photos of the program**</p>
 
@@ -20,7 +18,7 @@ Built with OpenCV, Numpy, and Scikit-Learn on **Python 3.6**
   <img src="https://i.imgur.com/6i8COw7.png" align="center" height="70%" width="70%" >
   
   
-
+#
 ------------
 
 ### Future Changes:
