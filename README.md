@@ -27,7 +27,7 @@ Built with OpenCV, Numpy, and Scikit-Learn on **Python 3.6**
 3. Warped and cropped image to obtain isolated grid.
 4. Processed the grid and applied a Hough Line Transform to return a list of rho and theta (bascially to get gridlines).
 5. Obtained the bounding rectangles for each digit using contours again.
-6. Extracted the digits and used a KNN classifier to identify them.
+6. Extracted the digits and used a trained KNN classifier to identify them.
 7. Represnted the digits in an array and appled a backtracking algorithm to solve the puzzle.
 8. Put the solved numbers onto the original photo.
 9. Do a victory dance!
