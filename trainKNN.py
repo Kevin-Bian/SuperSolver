@@ -6,11 +6,11 @@ import joblib
 
 
 
-data =  pd.read_csv("/Users/KevinBian/projects/opencv-sudoku/mnist_train.csv").as_matrix()
+data =  pd.read_csv("csv_train_path").as_matrix()
 training_data = data[0:40000,1:]
 training_label = data[0:40000,0]
 
-test_data =  pd.read_csv("/Users/KevinBian/projects/opencv-sudoku/mnist_test.csv").as_matrix()
+test_data =  pd.read_csv("csv_test_path").as_matrix()
 testing_data = test_data[0:40000,1:]
 testing_label = test_data[0:40000,0]
 
