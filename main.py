@@ -13,7 +13,7 @@ classifier = joblib.load('classifier.pkl')
 ################################# SETTING UP FOR PROCESSING ########################
 
 # Gather the image and change into grayscale for easier processing
-image = cv2.imread('/Users/KevinBian/Desktop/sudoku-tests/test3.jpg')
+image = cv2.imread('image_path_here')
 image_copy = np.copy(image)
 
 
@@ -46,7 +46,6 @@ dilated_img = process_img(image_copy)
 
 # Isolate the sudoku grid from the rest of the image using contours
 # Idea here is to take the largest external contours because we assume that sudoku grid will be largest (add prompt to make sure)
-#!double check on math/formula for this on the docs
 
 # This gets all the external contours
 new_img, contours, heir = cv2.findContours(
@@ -115,7 +114,6 @@ cropped_img = crop_and_warp_img(image_copy, sudoku_grid_corners)
 dilated_cropped_img = process_img(cropped_img)
 
 
-# GO OVER THIS SHIT CUZ IT'S FUCKED
 ############################# Get Gridlines ##########################
 
 # Apply Hough Line Transform, return a list of rho and theta
@@ -171,14 +169,12 @@ for cnt in contours[:81]:
     
     #check for blanks, if number of pixels are less than 10
     if (np.sum(digit > 0) < 90):
-       #cv2.putText(cropped_img,str(0),(x,y+h),font,1,(225,0,0),2)
        digit_list.append(0)
        
        
 
     else:
         num = classifier.predict(np.reshape(digit, (1,-1)))
-        #cv2.putText(cropped_img,str(num[0]),(x,y+h),font,1,(225,0,0),2)
         digit_list.append(num[0])
         
 
