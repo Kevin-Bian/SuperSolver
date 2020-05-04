@@ -3,9 +3,6 @@ from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 import joblib
 
-
-
-
 data =  pd.read_csv("csv_train_path").as_matrix()
 training_data = data[0:40000,1:]
 training_label = data[0:40000,0]
@@ -13,8 +10,6 @@ training_label = data[0:40000,0]
 test_data =  pd.read_csv("csv_test_path").as_matrix()
 testing_data = test_data[0:40000,1:]
 testing_label = test_data[0:40000,0]
-
-
 
 knn = KNeighborsClassifier(n_neighbors=15)
 knn.fit(training_data, training_label)

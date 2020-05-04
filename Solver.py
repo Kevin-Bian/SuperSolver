@@ -46,6 +46,4 @@ def solve(grid):
             grid[row][column] = 0
     return False
 
-
 #Algorithm inspired by https://www.geeksforgeeks.org/sudoku-backtracking-7/
-

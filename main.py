@@ -9,13 +9,11 @@ import Solver
 #classifier
 classifier = joblib.load('classifier.pkl')
 
-
 ################################# SETTING UP FOR PROCESSING ########################
 
 # Gather the image and change into grayscale for easier processing
 image = cv2.imread('image_path_here')
 image_copy = np.copy(image)
-
 
 def process_img(img):
     grayscale_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
@@ -39,7 +37,6 @@ def process_img(img):
 
     return cv2.dilate(outer_box_img, kernel, iterations=1)
 
-
 dilated_img = process_img(image_copy)
 
 ############################### EXTRACTING GRID ###############################
@@ -52,7 +49,6 @@ new_img, contours, heir = cv2.findContours(
     dilated_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 sudoku_grid = sorted(contours, key=cv2.contourArea, reverse=True)[
     0]  # sorts list by area decending and gets largest area
-
 
 # get max item in a dictionary algo
 bottom_left, blank = min(enumerate(
@@ -71,10 +67,8 @@ sudoku_grid_corners = [
     sudoku_grid[bottom_left][0]
 ]
 
-
 def scalar_distance(point1, point2):
     return np.sqrt(((point2[0] - point1[0]) ** 2) + ((point2[1] - point1[1]) ** 2))
-
 
 def crop_and_warp_img(img, rect_coordinates):
 
@@ -108,17 +102,14 @@ def crop_and_warp_img(img, rect_coordinates):
 
     return cv2.warpPerspective(img, cv2.getPerspectiveTransform(src, dst), (int(longest_side), int(longest_side)))
 
-
 cropped_img = crop_and_warp_img(image_copy, sudoku_grid_corners)
 
 dilated_cropped_img = process_img(cropped_img)
-
 
 ############################# Get Gridlines ##########################
 
 # Apply Hough Line Transform, return a list of rho and theta
 # get grid
-
 
 kernel = cv2.getStructuringElement(cv2.MORPH_CROSS,(3,3))
 
@@ -141,12 +132,10 @@ for line in lines:
 
 grid = cv2.dilate(grid, kernel, iterations=2)
 
-
 ############################# Add Boxes #####################################
 font = cv2.FONT_HERSHEY_SIMPLEX #number font
 digit_kernel = np.ones((2,2),np.uint8)
 _, contours, _ = cv2.findContours(grid,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
-
 
 digit_list = []
 x_coordinates = []
@@ -170,14 +159,10 @@ for cnt in contours[:81]:
     #check for blanks, if number of pixels are less than 10
     if (np.sum(digit > 0) < 90):
        digit_list.append(0)
-       
-       
-
     else:
         num = classifier.predict(np.reshape(digit, (1,-1)))
         digit_list.append(num[0])
         
-
 ############################# Extract digits and sorting #############################
 def reshape_grid_coordinates(grid_coordinates):
     new_grid_coordinates = [[],[],[],[],[],[],[],[],[]]
@@ -202,8 +187,6 @@ sorted_grid =[]
 for count in range(8,-1,-1):
     sorted_grid.append([x for blank,x in sorted(zip(x_coordinates_array[count],digit_array[count]))])
 
-
-
 ################### Putting Digits ##################################
 solved_grid = Solver.solve(sorted_grid)
 
@@ -214,9 +197,6 @@ else:
     solved_grid.reverse()
     flattened_ans = [item for sublist in solved_grid for item in sublist]
     flattened_grid_coordinates = [item for sublist in sorted_grid_coordinates for item in sublist]
-
-
-
     for count in range(81):
         x = flattened_grid_coordinates[count][0]
         y = flattened_grid_coordinates[count][1]
@@ -230,5 +210,3 @@ else:
     cv2.imshow("Picture:3", cropped_img)
     cv2.imshow("digit", digit)
     cv2.waitKey(0)
-
-
