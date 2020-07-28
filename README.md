@@ -22,7 +22,7 @@ Built with OpenCV, Numpy, and Scikit-Learn on **Python 3.6**
   
 ------------
 ### Notes:
-- Used KNN, SVN, CNN
+- Used KNN, SVM, CNN
 - I had most success with KNN
 ------------
 
